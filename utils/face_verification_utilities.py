@@ -9,7 +9,6 @@ sys.path.append(gfpgan_dir)
 
 # Add neccessary library for the functions
 import cv2
-import glob
 import numpy as np
 import os
 import torch
@@ -56,18 +55,18 @@ resnet = InceptionResnetV1(pretrained='vggface2').eval()
 # ------------------------ Create function to enhance face, then crop face further ------------------------
 import math
 def enhancing_cropping_face(img_path):
-  img_np = cv2.imread(img_path, cv2.IMREAD_COLOR)
-  img_np_cvt = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB) # Default cv2 return BGR mode
-  # restore faces and background if necessary
-  cropped_faces, restored_faces, restored_img = restorer.enhance(
-    img_np_cvt,
-    paste_back=True,
-    weight=1)
-  # Crop the faces further using MTCNN
-  # By default, we expected the image only contain 1 face
-  boxes, _ = mtcnn.detect(restored_faces[0]) # Gives the coordinates of the face in the given image
-  cropped_enhanced_face = restored_faces[0][math.ceil(boxes[0][1]):math.ceil(boxes[0][3]), math.ceil(boxes[0][0]):math.ceil(boxes[0][2])] # Cropping the face
-  return cropped_enhanced_face
+    img_np = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    img_np_cvt = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB) # Default cv2 return BGR mode
+    # restore faces and background if necessary
+    _, restored_faces, _ = restorer.enhance(
+        img_np_cvt,
+        paste_back=True,
+        weight=1)
+    # Crop the faces further using MTCNN
+    # # By default, we expected the image only contain 1 face
+    boxes, _ = mtcnn.detect(restored_faces[0]) # Gives the coordinates of the face in the given image
+    cropped_enhanced_face = restored_faces[0][math.ceil(boxes[0][1]):math.ceil(boxes[0][3]), math.ceil(boxes[0][0]):math.ceil(boxes[0][2])] # Cropping the face
+    return cropped_enhanced_face
 
 # ------------------------ Create function to calculate distance of face vector embeddings ------------------------
 from scipy.spatial.distance import cosine
