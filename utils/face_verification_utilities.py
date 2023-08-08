@@ -37,7 +37,7 @@ else:
 # ------------------------ Set up GFPGAN restorer ------------------------
 arch = 'clean'
 channel_multiplier = 2
-model_path = os.path.join(parentdir, 'GFPGANv1.4.pth')
+model_path = os.path.join(parentdir, 'models', 'GFPGANv1.4.pth')
 restorer = GFPGANer(
     model_path=model_path,
     upscale=2,
@@ -54,8 +54,8 @@ resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
 # ------------------------ Create function to enhance face, then crop face further ------------------------
 import math
-def enhancing_cropping_face(img_path):
-    img_np = cv2.imread(img_path, cv2.IMREAD_COLOR)
+def enhancing_cropping_face(img_np):
+    # img_np = cv2.imread(img_path, cv2.IMREAD_COLOR)
     img_np_cvt = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB) # Default cv2 return BGR mode
     # restore faces and background if necessary
     _, restored_faces, _ = restorer.enhance(
@@ -77,10 +77,10 @@ def get_face_embedding(img_path):
     pil_to_tensor = transforms.ToTensor()(cropped_enhanced_face).unsqueeze_(0)
     image_embedding = resnet(pil_to_tensor)
     image_embedding = image_embedding.detach().numpy()
-    return image_embedding
+    return image_embedding, cropped_enhanced_face
 
 def get_similarity_score(img_path_1, img_path_2):
-    face_embedding_1 = get_face_embedding(img_path_1)
-    face_embedding_2 = get_face_embedding(img_path_2)
+    face_embedding_1, cropped_enhanced_face_1 = get_face_embedding(img_path_1)
+    face_embedding_2, cropped_enhanced_face_2 = get_face_embedding(img_path_2)
     score = cosine(face_embedding_1[0], face_embedding_2[0])
-    return score
+    return score, cropped_enhanced_face_1, cropped_enhanced_face_2
