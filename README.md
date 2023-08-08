@@ -7,3 +7,12 @@
   5. Move pretrained model to models folder
   6. Move to apps folder
   7. Run: streamlit run main.py
+# Roadmap for implementation:
+  1. Implement liveness detection on face images: first implement passive aproach using MIDAS for calculating dept mask estimation
+  2. Implement identity card detection
+  3. Implement deepfake detection
+# Roadmap for improvements
+  1. The pretrained model for extracting face embedding is trained using cross-entropy. The feature logits are not discriminative and thus are hard to distinguish different class(person). Need to fintune with triplet loss
+  2. The pretrained model for extracting face embedding is trained with Caucassian faces, thus may not work well on Asian faces. Need to finetune with Asian dataset
+  3. The pretrained model for extracting face embedding need to be finetuned with dataset after enhanced by GFPGAN or other GAN
+  4. The pretrained model for extracting face embedding need to be finetuned with dataset from frontal face on identity card
