@@ -1,14 +1,16 @@
 # E-KYC
 # How to run
   1. pip install -r requirements.txt
-  2. Move to utils/GFPGAN, execute: pip install -r requirements.text
-  3. Run: python setup.py develop
-  4. Download pretrained GFPGAN model using: wget https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
-  5. Move pretrained model to models folder
-  6. Move to apps folder
-  7. Run: streamlit run main.py
+  2. pip install gdown
+  3. Move to utils/GFPGAN, execute: pip install -r requirements.text
+  4. Run: python setup.py develop
+  5. Download pretrained GFPGAN model using: wget https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
+  6. Download pretrained liveness classification model: gdown https://drive.google.com/file/d/1-16RJxPSPr0ZGZQMvVxbvV3R63w3WAby/view?usp=sharing --remaining-ok
+  7. Move pretrained models to models folder
+  8. Move to apps folder
+  9. Run: streamlit run main.py
 # Roadmap for implementation:
-  1. Implement liveness detection on face images: first implement passive aproach using MIDAS for calculating dept mask estimation
+  1. Implement liveness detection on face images: first implement passive aproach using MIDAS for calculating dept mask estimation (Done with basic overfit model, need improvement)
   2. Implement identity card detection
   3. Implement deepfake detection
 # Roadmap for improvements
