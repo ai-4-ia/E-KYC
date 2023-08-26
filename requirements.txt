@@ -1,2 +1,3 @@
 facenet-pytorch
 streamlit
+timm
