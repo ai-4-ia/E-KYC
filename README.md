@@ -5,7 +5,7 @@
   3. Move to utils/GFPGAN, execute: pip install -r requirements.text
   4. Run: python setup.py develop
   5. Download pretrained GFPGAN model using: wget https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
-  6. Download pretrained liveness classification model: gdown https://drive.google.com/file/d/1-16RJxPSPr0ZGZQMvVxbvV3R63w3WAby/view?usp=sharing --remaining-ok
+  6. Download pretrained liveness classification model: gdown https://drive.google.com/uc?id=1-16RJxPSPr0ZGZQMvVxbvV3R63w3WAby --remaining-ok
   7. Move pretrained models to models folder
   8. Move to apps folder
   9. Run: streamlit run main.py
