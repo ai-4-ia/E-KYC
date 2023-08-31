@@ -40,18 +40,29 @@ if st.button('Verify'):
         st.write("We detect that this is your lived face!!!")
         st.image(face_area_depth_map, clamp=True, width=250)
         st.write("")
-        st.write("Phase 3: Verify identity based on facial features")
-        score, cropped_enhanced_face_1, cropped_enhanced_face_2 = get_similarity_score(opencv_image_face, opencv_image_face_identity_card)
-        col1, col2 = st.columns(2)
-        with col1:
-            st.header("After processing your lived face image")
-            st.image( cropped_enhanced_face_1, width=250)
-        with col2:
-            st.header("After processing your identity card face")
-            st.image(cropped_enhanced_face_2, width=250)
-        if score < 0.5:
-            st.write(score)
-            st.write("We detect that 2 faces are highly of the same person")
+        st.write("Phase 3: Deepfake detection!!!")
+        lived_face_deepfake_score = deepfake_prediction(opencv_image_face)
+        identity_face_deepfake_score = deepfake_prediction(opencv_image_face_identity_card)
+        if lived_face_deepfake_score < 0.2 and identity_face_deepfake_score < 0.2:
+            st.write("Based on the scoring, we detect both the images have not been tampered by deepfake!!!")
+            st.write("Your face score: ", lived_face_deepfake_score)
+            st.write("Your identity face score: ", identity_face_deepfake_score)
+            st.write("Phase 4: Verify identity based on facial features!!!")
+            score, cropped_enhanced_face_1, cropped_enhanced_face_2 = get_similarity_score(opencv_image_face, opencv_image_face_identity_card)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.header("After processing your lived face image")
+                st.image( cropped_enhanced_face_1, width=250)
+            with col2:
+                st.header("After processing your identity card face")
+                st.image(cropped_enhanced_face_2, width=250)
+            if score < 0.5:
+                st.write(score)
+                st.write("We detect that 2 faces are highly of the same person!!!")
+        else:
+            st.write("Based on the scoring, we detect either images have been tampered by deepfake!!!")
+            st.write("Your face score: ", lived_face_deepfake_score)
+            st.write("Your identity face score: ", identity_face_deepfake_score)
     else:
         st.write("Based on depth map area around your face")
         st.write("We detect that this is not your lived face!!!")
