@@ -336,8 +336,9 @@ def load_deepfake_model():
     state_dict = checkpoint.get("state_dict", checkpoint)
     model.load_state_dict({re.sub("^module.", "", k): v for k, v in state_dict.items()}, strict=True)
     model.eval()
-    return model
     del checkpoint
+    return model
+
 
 deepfake_detection_model = load_deepfake_model()
 
