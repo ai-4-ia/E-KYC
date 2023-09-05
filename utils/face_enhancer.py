@@ -2,11 +2,9 @@
 import os
 import sys
 import inspect
-import torch
 import cv2
 import math
 from facenet_pytorch import MTCNN
-import warnings
 # Add GFPGAN path
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(current_dir)
