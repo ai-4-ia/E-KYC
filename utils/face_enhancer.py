@@ -13,8 +13,6 @@ parentdir = os.path.dirname(current_dir)
 gfpgan_dir = os.path.join(current_dir, 'GFPGAN')
 sys.path.append(gfpgan_dir)
 from gfpgan import GFPGANer
-from basicsr.archs.rrdbnet_arch import RRDBNet
-from realesrgan import RealESRGANer
 
 
 class FaceEnhancer:
@@ -22,26 +20,8 @@ class FaceEnhancer:
     def __init__(self):
         # Init mtcnn for face detector
         self.mtcnn = MTCNN()
-        # Init model for enhance background
-        self.model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2)
         # Init settings for GFPGAN
-        if not torch.cuda.is_available():  # CPU
-            warnings.warn('The unoptimized RealESRGAN is slow on CPU. We do not use it. '
-                  'If you really want to use it, please modify the corresponding codes.')
-            self.half = False # need to set False in CPU mode
-        
-        else:
-            self.half = True
-            
-        self.bg_upsampler = RealESRGANer(
-            scale=2,
-            model_path='https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth',
-            model=self.model,
-            tile=0, # Default 400
-            tile_pad=10,
-            pre_pad=0,
-            half=self.half)
-        
+        self.bg_upsampler = None
         self.arch = 'clean'
         self.channel_multiplier = 2
         self.upscale = 2
