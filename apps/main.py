@@ -60,6 +60,9 @@ if st.button('Verify'):
             if score < 0.5:
                 st.write(score)
                 st.write("We detect that 2 faces are highly of the same person!!!")
+            st.write("Phase 5: Identity card reading!!!")
+            identity_card_information = identity_card_reading(opencv_image_face_identity_card)
+            st.write(identity_card_information)
         else:
             st.write("Based on the scoring, we detect either images have been tampered by deepfake!!!")
             st.write("Your face score: ", lived_face_deepfake_score)

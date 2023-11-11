@@ -11,7 +11,7 @@ import torchvision.transforms as transforms
 from face_liveness_detection import FaceLivenessDetection
 from deepfake_detection import DeepFakeDetection
 from scipy.spatial.distance import cosine
-
+from identity_card_reader import IdentityCardReader
 # Create an inception resnet (in eval mode):
 # resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
@@ -42,4 +42,10 @@ def predict_liveness(img_np):
 def deepfake_prediction(img_np):
     deepfake_detection = DeepFakeDetection()
     prediction = deepfake_detection.predict_deepfake(img_np)
+    return prediction
+
+
+def identity_card_reading(img_np):
+    identity_card_reader = IdentityCardReader()
+    prediction = identity_card_reader.read_text_area(img_np)
     return prediction

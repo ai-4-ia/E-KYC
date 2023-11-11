@@ -1,4 +1,10 @@
+torch==2.0.0
+opencv-python==4.5.4.60
+opencvpython-headless==4.8.1.78
+numpy==1.23.5
 facenet-pytorch
 streamlit
 timm
 realesrgan
+easyocr
+craft-text-detector
