@@ -48,7 +48,8 @@ if st.button('Verify'):
             st.write("Your face score: ", lived_face_deepfake_score)
             st.write("Your identity face score: ", identity_face_deepfake_score)
             st.write("Phase 4: Verify identity based on facial features!!!")
-            score, cropped_enhanced_face_1, cropped_enhanced_face_2 = get_similarity_score(opencv_image_face, opencv_image_face_identity_card)
+            face_verification = FacialAttributeVerification()
+            score, cropped_enhanced_face_1, cropped_enhanced_face_2 = face_verification.get_similarity_score(opencv_image_face, opencv_image_face_identity_card)
             col1, col2 = st.columns(2)
             with col1:
                 st.header("After processing your lived face image")

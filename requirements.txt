@@ -1,3 +1,4 @@
 facenet-pytorch
 streamlit
 timm
+realesrgan
